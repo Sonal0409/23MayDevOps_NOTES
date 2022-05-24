@@ -1,0 +1,179 @@
+
+to connect to ec2 instance over ssh
+
+Command:
+
+ssh -i "keyfile.pem" ec2-user@publicip of the server
+
+
+Install git:
+
+$ sudo su -
+
+yum install git -y
+
+git --version
+
+
+Scenario 1:
+
+
+Create a working a working directory
+
+$ sudo su -
+
+$ mkdir myproject
+
+$ ls
+
+go inside the folder
+
+$ cd myproject
+
+Create a new file in the directory
+
+$ touch index1.html
+
+Scenario 2:
+
+Create the local repo
+***********************
+$ git init
+
+$ ls -al ==> . git folder is available
+
+Scenario 3:
+**************
+git configuration to set up a username and email address
+
+3 types:
+ system : configuration of git done for entire system
+ global : configuration of git done for that particular user you are logged into the server(root)
+ local : configuration of git done for that particular folder (myproject)
+
+$ git config --global user.name sonal0409
+
+$ git config --global user.email mittal.sonal04@gmail.com
+
+Interview questions:
+
+1. List all the config done by you on your git repo
+
+ $ git config --list
+
+Where is this config saved- in which file
+
+ --global config will be save : ~/.gitconfig
+
+ $ cat ~/.gitconfig
+
+
+Scenario 4:
+*******************
+
+Add the file from working directory to stagging area
+
+ $ git status
+
+ $ git add index1.html
+
+ $ git status
+
+ $ git commit -m "added file"
+
+ $ git ls-files  ==> see if file is in local repo or not
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
