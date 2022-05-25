@@ -82,11 +82,170 @@ Add the file from working directory to stagging area
  $ git commit -m "added file"
 
  $ git ls-files  ==> see if file is in local repo or not
+ 
+ 
+Scenario 4: git log
+
+$ git log
+$ git log --oneline
+
+$ git show <commitid>
+
+$ git show 8020b67
+
+**********
+Scenario 5: Modify an exisitng file, which is already in Local repo
+
+add the modification to LR
+
+
+1 method:
+
+$ git add index1.html
+$ git commit -m "modification"
+
+
+add the modification to LR
+
+2nd method:(using -a option: add all the changes & commit it)
+
+$ git commit -a -m "modification index2.html"
+
+
+************
+
+Scenario 6: to check difference between 2 version of a file
+
+$ git diff filename
+
+$ git diff commit1 commit2
+
+
+********************************************************
+Scenario6: Deletion of file
+
+- Deletion of file from WD & local repo
+
+# git rm file1
+# git status
+# git commit -m "deletion of file1"
+# ls
+# git ls-files
+
+- Deletion of file local repo only
+
+# git rm --cached file2
+# git commit -m "deteled file from local"
+# git status    // file will be untracked
+# ls
+# git ls-files
+
+# add the untracked file to local repo
+
+***********************************************************
+
+
+Scenario7: Ignoring Files
+
+# vim log
+# git status  // file untracked
+# vim .gitignore   // add name of file "log" , which wil be noe ignored
+# git status   // log will be ignored and .gitignore untracked
+# git add .gitignore
+# git commit -m "added ignore file"
+# git status // working tress has to be clean
+
+***********************************************************
+
+Scenario 8: Reverting the changes:
+
+# vim file3  // create a new files
+# git add file3
+# git commit -m "added file3"
+
+//Delete the file
+
+# git rm file3
+# git commit -m "deleted file3"
+# ls
+# git ls-files
+
+# git log --oneline    // last commit id is of delete action, copy it
+// lets revert the commit
+
+# git revert commit id
+
+// file back to WD and local
+# ls
+# git ls-files
+
+
+*******************************************************************
+
+Branching
+
+# git status ==> shows master branch
+# git branch b1     // copies all files form master
+# git status
+# git checkout b1
+# git status  
+ // On branch b1
+
+# git ls-files // all files same as master on b1
+# git log --oneline // all commit same as master 
+
+Create a file on branch b1
+
+# vim file4 
+# git add file4
+# git commit -m "added file4"
+# git ls-files
+# git log --oneline   // 1 new commit which is not on master right now
+
+
+Merging a file from branch b1 to master
+
+# git checkout master
+# git ls-files
+# git merge b1 master  // merge from source b1 to destination master
+# git ls-files
+# git log --oneline
+
+************************************************************
+
+********************************************************
+STASHING of files on GIT
+
+
+# git status ==> * indicates we are on master branch
+# vim exitingfileName ==> inster new code for signout button ==>esc ==> :wq!
 
 
 
+# git status ==> changes that are untracked and we don’t want to commit them right now.
+
+So stash them on temporary space:
+
+# git stash   ==> all the untracked changes will be moved to temperory space
+
+Where is this temporary space?
+
+# git stash list   ==> will give list of chnages stashed 
 
 
+# git show stashnumber  ==> give stash number
+
+
+GET changes back from stash ===> UNSTASHING
+
+# git stash pop stash@{0}   ==> will revert back all untracked file chnages
+After unstashing, the files will be dropped from temperory shelves. 
+
+  OR
+# git stash apply statsh@{0}   ==> will revert back chnages from temperory shelves to working directory
+// and files still remains on temperory shelves if needed latter in other branches.
+
+# git statsh list ==> nothing will be there  on executing stash pop.
 
 
 
