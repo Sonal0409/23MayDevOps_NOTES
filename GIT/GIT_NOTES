@@ -83,7 +83,7 @@ Add the file from working directory to stagging area
  $ git ls-files  ==> see if file is in local repo or not
  
  
-Scenario 4: git log
+Scenario 6: git log
 
 $ git log
 $ git log --oneline
@@ -92,10 +92,34 @@ $ git show <commitid>
 
 $ git show 8020b67
 
+Assignment: Interview Question:
+
+Save the commit history in a txt file
+
+$ git log >> /pathoffile/filename.txt
+
+
 **********
-Scenario 5: Modify an exisitng file, which is already in Local repo
+Scenario 6: Modify an exisitng file, which is already in Local repo
 
 add the modification to LR
+
+$ nano index1.html
+
+add some lines
+
+ctl X ==> y ==> press enter
+
+OR
+
+$ vim index1.html
+
+add some lines
+
+press esc ==> :wq! 
+
+
+Chnages==> file1 file2 index1 index2
 
 
 1 method:
@@ -104,7 +128,7 @@ $ git add index1.html
 $ git commit -m "modification"
 
 
-add the modification to LR
+add all the modification to LR
 
 2nd method:(using -a option: add all the changes & commit it)
 
@@ -113,7 +137,7 @@ $ git commit -a -m "modification index2.html"
 
 ************
 
-Scenario 6: to check difference between 2 version of a file
+Scenario 7: to check difference between 2 version of a file
 
 $ git diff filename
 
@@ -140,6 +164,37 @@ Scenario6: Deletion of file
 # git ls-files
 
 # add the untracked file to local repo
+
+
+*****************************************
+
+If chnages are in stagging area and you have to work on them again--you need to rewrite the code
+
+We need to unstage the changes, so as to write code again
+
+$ git reset HEAD filename
+
+OR
+
+$ git restore --staged <file>
+
+all chnages form stagging area==> move back to working directory(unstagged)
+
+***************************************
+ to discard changes in working directory
+if changes of an existing file(tracked by git)  are to be removed
+ie: remove the modifications from working directory using a git command
+
+$ git checkout -- index2.html
+
+OR 
+
+$ git restore <file>.
+
+
+permanently delete the changes
+
+******************************************
 
 ***********************************************************
 
