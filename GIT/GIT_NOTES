@@ -301,3 +301,63 @@ After unstashing, the files will be dropped from temperory shelves.
 
 # git statsh list ==> nothing will be there  on executing stash pop.
 
+****************************************
+
+Configuring Local machine to GITHUB account
+
+whenever we want changes that we have in local repository to be pushed in remote repo on github
+
+we have to be authenticate
+
+communicate from local to github ---> 
+
+1. username/personal access token over https
+
+2. over ssh
+
+
+passwordless authentication:
+
+generate ssh key on your local system
+
+
+ ssh-keygen
+
+press enter 3 times
+
+key will be generated
+
+cat /root/.ssh/id_rsa.pub
+
+go to github --> settings --> ssh & GPG keys --> new ssh key
+
+add the key in github and save
+
+Scenario 2:
+
+Create a remote repository
+**********
+
+Done
+
+Scenario 3:
+
+Push the chnages from local to remote
+
+git push origin master
+
+pull & fetch changes
+
+git pull origin master
+
+git fetch origin master
+
+Cloning
+
+git clone <remotereponame>
+
+git clone https://github.com/Sonal0409/18Apr-ClassNotes
+
+Forking.
+Click on fork button on another users repo to perform forking
+
