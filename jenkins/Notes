@@ -165,6 +165,159 @@ Build Triggers--> Poll SCM --> * * * * *
 Build will be generated each time there is a chnage in the repository only.
 
 
+**************************
+
+
+ $ mvn --version
+
+Jenkins--> Manage Jenkins-->Global Tool configuration
+
+Go to JDK section
+In this give:
+1. Uncheck -- install automatically
+2. JDK name as myjava
+
+3 go to terminal/server ==> mvn --version
+
+4. copy the value of variable java Home
+
+JAVA_HOME =
+
+/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.265.b01-1.amzn2.0.1.x86_64
+
+5. Add in jenkins also
+
+Under GIT==> leave it same 
+
+Under maven ==> lets install it automatically
+Type mymaven and check the install automatically box.
+Save the changes
+
+
+All set to create pipelines
+
+Upstream downstream pipeline for bUild
+************************
+
+1. new Job --complie-->freestyle project
+2. Source code management --> select git
+--->give git path ===> https://github.com/Sonal0409/DevOpsClassCodes.git
+
+3. build ==> select invoke top level maven targets
+   select maven version===> mymaven
+    goal ==> compile
+4. save ==> build now 
+So all the compiled files will be present at this location
+==> look for this line in console output at the end on jenkins
+Compiling 13 source files to /var/lib/jenkins/workspace/compile1/target/classes
+
+
+******************************
+2nd JOB ==>Code Review
+*********************
+
+Jenkins--> new item--> Name= code Review==> freestyle project
+==> source codemanagement==>select git==> 
+give git repo name https://github.com/Sonal0409/DevOpsClassCodes
+
+Step 2: build ==> invoke top level maven target==>
+ select maven version==>mymaven ==> goal = pmd:pmd
+
+save==> build now
+==> click on build number and see the console
+
+Goto Workspace on the left side of jenkins Job code review
+In the folder go to ==> target folder ==> you will find pmd.xml file.
+
+CONVERT FILE TO TREND REPORT
+*******************************
+ manage jenkins--> manage plugins--> available --> Search for pmd plugin--> install it.
+
+Now go to the job Code Review==> go to post build actions ==> select Publish PMD anaylsys report
+
+under PMD results==> give path of pmd.xml file ie:  target/pmd.xml
+
+Save the file and build now.
+
+After the build is successfull, you will see PMD Warnings
+
+So you will see 12 new warning have been generated on the code.
+Scroll down 
+Under package click on first one to check warnings.
+
+*********************************
+JOB3: Testing --Unit Test report
+********************************
+
+1. jenkins--> new item--> Name= unitTest==> freestyle project
+==> source codemanagement==>select git==> give git repo name https://github.com/Sonal0409/DevOpsClassCodes
+
+2. build ==> invoke top level maven target==> select maven version==>mymaven ==> goal = test
+
+3. Save and Build now.
+
+4. Check the workspace
+
+5. surefire-reports will be present
+
+But we cannot understand them easily. So lets generate understandable reports by using Junit reports option under post build actions
+
+6. Go back to job==> post build actions==> select junit test result job
+==> give target/surefire-reports/*.xml  ===>under test report xml
+This is path where xml files are there.
+Here *.xml is as we want to use all the xml files
+
+7. Save and build again
+
+Go to build number ===> on left side you will see Test Result 
+Click on it and you can see all pass and fail details of the tests
+
+**************************
+JOB4 : Metric check
+************************
+
+1. Go to jenkins--> new item--> Name= Metriccheck==> freestyle project
+==> source codemanagement==>select git==> give git repo name https://github.com/Sonal0409/DevOpsClassCodes
+
+2.  build ==> invoke top level maven target==> select mymaven
+    goal = cobertura:cobertura -Dcobertura.report.format=xml
+
+3.==> save==> build now
+==> click on build number and see the console
+
+4. go to Workspace ==> target/site/cobertura/coverage.xml  
+
+The xml file will be there, But we cannot understand them easily. So lets generate understandable reports by downloading cobertura plugin
+
+Go to manage jenkins--> manage plugins--> cobertura --> install it
+
+Go back to the job--> post build actions--> select publish cobertura coverage report
+Under cobertura xml pattern give ==> target/site/cobertura/coverage.xml   ==> you can take the path from below displayed text.
+
+Save and build again
+Click build number ==> on left side you will find Coverage Report==> click on it ==> we cna see the coverage report.
+
+**********************************
+Job5 Package Job
+***************************
+
+Go to jenkins--> new item--> Name= Package==> freestyle project
+==> source codemanagement==>select git==> give git repo name https://github.com/Sonal0409/DevOpsClassCodes
+ 
+build ==> invoke top level maven target==>mymaven
+
+ goal = package
+
+==> save==> build now
+==> click on build number and see the console
+
+==> go to workspace ==> target/addressbook.war
+
+
+
+Install plugin build pipeline and then configure it to see pipeline view
+
+
 
 
 
