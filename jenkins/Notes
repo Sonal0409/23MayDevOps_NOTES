@@ -317,7 +317,219 @@ build ==> invoke top level maven target==>mymaven
 
 Install plugin build pipeline and then configure it to see pipeline view
 
+*************************************************
 
+Sceanrio1:
+
+Create a Code based pipeline
+ 
+   Compile==>codeReview==>unitTest==>Coverage==>Package
+
+Can be written in 2 ways
+ > scripted pipeline syntax
+
+ > declarative pipeline syntax
+    > very easy to read & write
+    > no major programming or scripting skills not required
+    > code is written in a declartive format
+       name sonal
+       trainer devops
+       git "https:/git/sonal0409/myrepo.git"
+       sh 'mvn compile"
+    > execute the code, jenkins will first validate the code, give you syntax errors and then finally run the code
+    > it provides a fixed structure, used needs to write the declarations
+    > for writing the pipeline code, the jenkins template used is Pipeline instead of Free style project
+
+lets write the pipeline code:
+
+Step 1. for writing the pipeline code, the jenkins template used is Pipeline instead of Free style project
+
+Pipeline consists of set of tasks to be executed one after the other
+
+Compile==>codeReview==>unitTest==>Coverage==>Package
+
+Code pipeline following sections should be mentioned:
+
+1. pipeline will always start with "pipeline"
+
+2. pipeline will then have tools section : it will jenkins which tools to use while executing the tasks
+
+
+here declare the tools to used to execute the pipeline
+  
+tool 'nameoftool'   # name that you provided in global tool configuration
+for eg:
+
+  tools{
+ jdk  'myjava'
+ maven 'mymaven'
+}
+
+3. agent ==> the server on which the tasks have to be executed
+
+ for eg:  agent any ==> exeucte the tasks on the current machine
+
+4. tasks to be executed==> they are called as stages in pipeline
+
+   stages will have multiple stage sections
+   
+  each stage section represents a job
+  
+  every stage will have a section ==> steps to execute the job
+
+ stages{   
+
+   stage('nameStage1')  ==> stage = task
+    {
+     steps{
+     steps to be build
+  }
+
+    }
+
+  stage('nameStage2')  ==> stage = task
+    {
+     steps{
+     steps to be build
+  }
+
+    }
+  stage('nameStage3')  ==> stage = task
+    {
+     steps{
+     steps to be build
+  }
+
+    }
+
+}
+
+
+
+
+
+Pipeline code:
+
+pipeline{
+    tools{
+        jdk 'myjava'
+        maven 'mymaven'
+    }
+    agent any
+    
+    stages{
+        stage('Checkout SCM')
+        {
+            steps{
+                
+            git 'https://github.com/Sonal0409/DevOpsClassCodes.git'
+            
+            }
+        }
+        stage('Compile')
+        {
+            steps{
+                
+                sh 'mvn compile'
+            }
+        }
+          stage('CodeReview')
+        {
+            steps{
+                
+                sh 'mvn pmd:pmd'
+            }
+        }
+        
+    stage('UnitTesting')
+        {
+            steps{
+                
+                sh 'mvn test'
+            }
+        }  
+       stage('Code Coverage')
+        {
+            steps{
+                
+                sh 'mvn cobertura:cobertura -Dcoberture.report.format=xml'
+            }
+        }     
+          stage('Package')
+        {
+            steps{
+                
+                sh 'mvn package'
+            }
+        }  
+        
+        
+         
+    }
+}
+
+
+
+
+
+
+Version Control the pipeline code
+
+> we can use Jenkinsfile to version control the pipeline code
+
+> Jenkinsfile is a text file
+  user will write pipeline code inside this file
+> this file is maintained in github
+> jenkins pipeline job will be configured to collect the jenkinsfile and exeucte it
+
+Advantage:
+
+every user can edit the file form github
+no need to log onto jenkins server
+every chnage done to the file is available
+we can reuse the jenkins file under different jenkins pipeline projects/jobs
+
+
+How to use jenkins file:
+
+> create a new job ---> pipeline template
+
+Master & Slave Set up in jenkins
+
+
+Complete set on Slave machine
+
+ > 1 ec2 machine of linux OS
+  > select correct key pain
+  > create security group rule --all traffic, anywhere
+ 
+connect to server
+
+$ sudo su -
+
+ > install git 
+  yum install git -y
+
+ > install java
+
+yum install java-1.8.0-openjdk-devel
+
+> install maven
+
+yum install maven
+
+
+Create the workspace directory also known as root directory
+
+ $ cd /tmp
+
+ $ mkdir jenkinsdir
+
+ $ cd jenkinsdir
+
+ $ pwd   ==>it will give present working directory==> /tmp/jenkinsdir
+
+ $ chmod -R 777 /tmp/jenkinsdir   ==> read write permission to directory
 
 
 
