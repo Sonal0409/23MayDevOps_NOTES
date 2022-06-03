@@ -32,4 +32,4 @@ Provide credentials
 username: admin
 password: passwrod 
 Not able to start Artifactory services?
-Make sure You meet the Artifactory system requirements
+Make sure You meet the Artifacrtory system requirements.
