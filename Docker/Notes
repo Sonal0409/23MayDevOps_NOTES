@@ -1,0 +1,310 @@
+Note:
+******
+Ansible module will be completed after Docker & Kubernetes
+
+
+recap:
+
+Docker hub
+
+Docker Host
+
+systemctl start docker
+
+root level permission to work with docker
+
+Pull an Image and run it into a container
+
+Image Name: 
+
+registryName/reponame/Imagename:tagname
+
+
+docker pull imagename ==> pull the image from dockerhub, library , image and lastest tag
+
+docker pull imagename:tag  ==>pull the image from dockerhub, library , image and req tag
+
+
+docker run Imagename ==> pull the image form docker and run it --launch a container
+
+
+Agenda:
+***************
+
+Docker run reference
+
+Docker port mapping
+
+Docker Volumes
+
+
+
+Delete Container:
+
+docker rm -f <containername/id>
+
+Delete all container in the docker host
+
+docker rm -f $(docker ps -aq)
+
+*****************
+
+launch a container with a Mode:
+****************
+
+1. Foreground Mode : -it
+
+When a container run command is executed with Foreground Mode:
+
+ > Container will be up & running
+ > User will be logon to the container
+
+$ docker run --name c1 -it centos
+
+Comout of container
+
+ > ctl pq  ==> container will be running & you will out of the container
+
+ > exit  ==> container will be exited state & you will out of the container
+
+
+Attach to the container terminal again / go inside the container again
+
+$ docker attach containername/id
+
+Attach to a container when it is Stopped/exited
+
+> you cannot attach or logonto a Exited containter
+
+> you will have start the container again & then attach to it
+
+$ docker start containName/id
+
+
+
+2. Detached Mode : -d
+
+When a container run command is executed with Detached Mode:
+
+ > Container will be up & running
+ > User will not be attached to the container
+
+
+ $ docker run --name n1 -d nginx
+
+
+3. Access the container from browser of your machine:
+
+*** images of type Web server and app servers
+
+ Every image of type web, app, DB servers will have a port exposed to it
+
+using this port any user can access the container application
+
+
+Port mapping to be done with run command
+
+
+ -p systemport:containerport
+
+user will give a valid system port and mapp it to container port
+
+ docker run  -p 8989:80 imagname
+
+
+ - P
+
+ docker will automatically map the container port to system port
+
+ docker run -P imagename
+
+ docker will take free port on host machine and map it to contaienr port
+
+
+
+
+Docker Volumes:
+
+******************
+
+
+1. Named Volume 
+
+step1: we will create a volume of specific name
+
+docker volume create myvol
+
+> the volume always get created in docker area : /var/lib/docker/volumes
+
+> data will be preserved at : /var/lib/docker/volumes/myvol/_data
+
+Step2: map the volume with the directory of the container whose data has to be preserved
+
+docker run --name c1 -it -v myvol:/tmp centos
+
+Step3: check if data is preserved on the volume or not
+
+Data is being preserved in volume directory
+
+/var/lib/docker/volumes/myvol/_data
+
+
+2. Bind mounts Volume
+
+
+Is a type of volume in which any directory of the host machine can be mapped to the container directory
+
+
+docker run -v /hostdir/path:containerdir imagename
+
+
+if there a direcotry on hostmachine
+
+/home ==> config.xml
+
+i want this file to be availbe in my container 
+
+some dire : /var/www/html
+
+how cna we do it?
+
+
+  docker run -v /home/config.xml:/var/www/html imagename
+
+
+
+
+Depoy an ecomm application on a httpd image container
+
+
+ecomm app code: github
+
+I want to code to be on my docker host:
+
+ git clone 
+
+
+Copy the current directory files on the container directory
+
+
+ docker volume : bind mount
+
+ -v /pathdirectory:containerdir
+
+
+ -v root/ecomm:/usr/local/apache2/htdocs/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
