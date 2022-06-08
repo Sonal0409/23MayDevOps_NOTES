@@ -195,6 +195,154 @@ Copy the current directory files on the container directory
  -v root/ecomm:/usr/local/apache2/htdocs/
 
 
+Creating a docker file and building an image from it
+*******************************************************
+it is a simple txt file.
+
+# vim dockerfile
+	i
+
+FROM centos    // base image information
+MAINTAINER edureka
+RUN yum -y update            // these are commands that we give for building the image
+RUN yum install git -y		// information about packages that shoudl be 					there on the image
+VOLUME /data
+:wq!
+
+# docker build -t mycentos:git .
+
+When we run the image -->container will be created.
+
+	# docker images
+
+
+	# docker run --name c1 -it mycentos1:dockerfile
+	
+
+==> data folder which is mounted for volume wll be there
+
+	
+
+OTher instructions that we can give in an Image :
+FROM: 
+
+MAINTAINER:
+
+RUN:
+
+CMD:
+
+VOLUME:
+
+EXPOSE:
+
+ADD:
+
+**************************************************
+
+Deploy Job in Jenkins:
+**************************************
+Steps to create a Jenkins job and create docker file and create container for addressbook.war
+
+1. Start the jenkins on AWS instance
+
+# systemctl start jenkins
+
+2. Start docker 
+# systemctl start docker
+
+3. Log into jenkins --> go to package job --go to console and copy the path of .war file
+
+4. create a new job -->Deploy
+
+5. Go to build -->shell command
+
+rm -rf mydockerfile
+mkdir mydockerfile
+cd mydockerfile
+cp /var/lib/jenkins/workspace/Package/target/addressbook.war .
+touch dockerfile
+cat <<EOT>> dockerfile
+From tomcat:9
+ADD addressbook.war /usr/local/tomcat/webapps
+EXPOSE 8080
+CMD ["catalina.sh", "run"]
+EOT
+sudo docker build -t myimage:$BUILD_NUMBER .
+sudo docker run -itd -P myimage:$BUILD_NUMBER
+
+Save the job
+
+Go to instance to give jenkins permission to execute docker commands. As of now we are logged in as admin in jenkins and it doesnt have permission to run docker commands.
+
+So go to
+vim /etc/sudoers
+i
+add under root
+Jenkins ALL=NOPASSWD: ALL
+:wq!
+
+Go back to jenkins and build now.
+
+==> New image and container will be created
+
+# docker images
+
+# docker ps -a
+
+Access from browser
+
+http://18.221.206.57:32768/addressbook/
+
+******************************************************************************
+
+**************************************************
+
+
+
+
+mkdir demoCompose
+cd demoCompose
+
+vi docker-compose.yml
+
+version: '2'
+
+services:
+  compose-test:
+   image: centos:7
+   links:
+    - compose-db
+   command: sleep infinity
+  compose-db:
+   image: redis
+   expose:
+    - "6379"
+
+$ docker-compose up -d
+
+$ docker-compose ps
+
+$ docker-compose exec compose-test /bin/bash
+
+[OR]
+$ docker-compose exec compose-test sh
+
+# yum install -y nc
+# nc compose-db 6379
+# ping
+
+# set name Sonal
+
+# get name
+
+Ctrl+C
+
+# exit
+
+
+$ docker-compose down
+
 
 
 
