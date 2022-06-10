@@ -1,0 +1,66 @@
+
+Command to check number of nodes in cluster
+
+$ kubectl get nodes
+
+
+Schedule a pod in kube cluster
+
+$ kubectl run pod1 --image nginx
+
+similar to docker
+
+ $ docker run --name c1 nginx
+
+Check the pods is created or not in the cluster
+
+ $ kubectl get pods
+
+which Node is the pods scehduled:
+
+$ kubectl get pods -o wide
+
+similar to docker
+
+docker ps -a
+
+How did all this happen
+
+to see all the details of the container:
+
+$ kubectl describe pod pod1 | less
+
+==> press q to come out of it 
+
+similar to docker
+
+docker inspect <containername>
+
+
+Create a pod using object definition file:
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+
+Multi container POD
+***************************
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-container
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.10-alpine
+  - name: alpine
+    image: alpine:3.5
+    command: ["watch", "wget", "-qO-", "localhost"]
+
+
+$ kubectl create -f pod-definition.yml
