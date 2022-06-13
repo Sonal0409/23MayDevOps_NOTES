@@ -185,6 +185,8 @@ spec:
             limits:
               cpu: 10m
 
+$ kubectl create -f deployment2.yml
+
 ---
 
 apiVersion: v1
@@ -200,6 +202,7 @@ spec:
      port: 80
      targetPort: 80
 
+$ kubectl create -f service2.yml
 ---
 
 apiVersion: autoscaling/v1
@@ -215,6 +218,8 @@ spec:
   maxReplicas: 10
   targetCPUUtilizationPercentage: 5
   
+  $ kubectl create -f hpa.yml
+  $ kubectl get all
   
   Load Genrator command:
   kubectl run -i --tty load-generator --rm --image=busybox --restart=Never -- /bin/sh -c "while sleep 0.01; do wget -q -O- http://10.8.0.237; done"
