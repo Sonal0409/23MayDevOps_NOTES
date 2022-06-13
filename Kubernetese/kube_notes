@@ -92,3 +92,21 @@ spec:
    containers:
     - name: myn1
       image: nginx
+      
+      
+      
+      Create replicaset
+      
+      $ kubectl create -f <name of the file.yml>
+      
+      Get all the object created in cluster
+      
+      $ kubectl get all
+      
+      get pods created in the cluster based on the labels
+      
+      $ kubectl get pods -l type=webserver
+      
+      Describe the details of the replicaSet
+      
+      $ kubectl describe replicaset myrs | less
