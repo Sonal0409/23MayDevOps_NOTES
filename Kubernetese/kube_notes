@@ -153,4 +153,6 @@ spec:
     
     $ $ kubectl describe deployment kubeserve | less
     
-    
+  565  kubectl rollout history deployment kubeserve
+  566  kubectl rollout undo deployment kubeserve --to-revision=1
+  567  kubectl describe deployment kubeserve | less
