@@ -227,6 +227,65 @@ spec:
   
   ***************************************************************
   
+  Persistent Volume:
+  ************************
+  apiVersion: v1
+kind: PersistentVolume
+metadata:
+ name: block-pv
+spec:
+ storageClassName: manual
+ capacity: 
+  storage: 1Gi
+ accessModes:
+  - ReadWriteOnce
+ hostPath:
+  path: /tmp/data
+  
+  ***********************
+  $ kubectl get pv
+  $ kubectl create -f pv.yml
+  
+  *****************
+  vim pvc.yml
+  
+  apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: pvc
+spec:
+ storageClassName: manual
+ accessModes:
+  - ReadWriteOnce
+ resources:
+  requests:
+   storage: 1Gi
+   
+   $ kubectl get pvc
+   $ kubectl create -f pvc.yml
+   
+   **************
+   
+   vim pod-pvc.yml
+   
+   apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: pvc
+spec:
+ storageClassName: manual
+ accessModes:
+  - ReadWriteOnce
+ resources:
+  requests:
+   storage: 1Gi
+   
+   ********
+   $ kubectl get pods
+   kubectl create -f pod-pvc.yml
+  
+  
+  
   # kubectl get configmap
  
  # kubectl create configmap dev-config --from-literal=app.mem=2048m
