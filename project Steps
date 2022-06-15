@@ -1,0 +1,128 @@
+
+
+Create a document
+
+title-- devops project -1
+
+Write introcdution to project in your words
+
+tools:
+git
+docker
+jenkins ansible
+
+
+Repo: code base
+
+https://github.com/Sonal0409/DevOpsClassCodes.git
+
+
+Solution:
+*************
+
+
+Step1: git hub repo
+
+screenshot
+
+Step 2:
+
+create a job - jenkins for continous build
+
+package --> addressbook.war
+
+Step3: 
+
+Install ansible
+
+screenshots
+
+ansible playbook -- install docker on a slave
+
+create docker image -- dockerfile
+
+container
+
+***************************
+
+Project 2:
+
+********
+
+
+Create a document
+
+title-- devops project -1
+
+Write introcdution to project in your words
+
+tools:
+git
+docker
+jenkins ansible
+kube
+monitoring
+
+
+Repo: code base
+
+https://github.com/Sonal0409/DevOpsClassCodes.git
+
+
+Solution:
+*************
+
+
+Step1: git hub repo
+
+screenshot
+
+Step 2:
+
+create a job - jenkins for continous build
+
+package --> addressbook.war
+
+Step3: 
+
+Install ansible
+
+screenshots
+
+ansible playbook -- install docker on a slave
+
+create docker image -- dockerfile
+
+Step 4: set up kube - GCP
+
+Ansible playbook --> kube master(slave)
+
+kubectl create -f https://raw.githubusercontent.com/Sonal0409/DevOps_ClassNotes/master/CICD%20pipeline/kubedeployment.yml
+
+pods will be deployed 
+
+Step5: manually deploy prometheus in your cluster
+
+take screenshot
+
+granfan monitoring also
+
+Step 6: implement autoscalling
+
+take screenshot and paste
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
