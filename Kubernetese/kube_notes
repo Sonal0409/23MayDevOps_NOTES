@@ -337,3 +337,17 @@ spec:
  kubectl edit configmap -n <namespace> <configMapName> -o yaml
 
 This opens up a vim editor with the configmap in yaml format. Now simply edit it and save it.
+
+**************************************
+
+Namespaces
+In Kubernetes, namespaces provides a mechanism for isolating groups of resources within a single cluster. Names of resources need to be unique within a namespace, but not across namespaces. Namespace-based scoping is applicable only for namespaced objects (e.g. Deployments, Services, etc) and not for cluster-wide objects (e.g. StorageClass, Nodes, PersistentVolumes, etc).
+
+When to Use Multiple Namespaces
+Namespaces are intended for use in environments with many users spread across multiple teams, or projects. For clusters with a few to tens of users, you should not need to create or think about namespaces at all. Start using namespaces when you need the features they provide.
+
+Namespaces provide a scope for names. Names of resources need to be unique within a namespace, but not across namespaces. Namespaces cannot be nested inside one another and each Kubernetes resource can only be in one namespace.
+
+Namespaces are a way to divide cluster resources between multiple users (via resource quota).
+
+It is not necessary to use multiple namespaces to separate slightly different resources, such as different versions of the same software: use labels to distinguish resources within the same namespace
