@@ -1,0 +1,43 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+  
+  
+  $ kubectl create -f role.yml
+  $ kubectl get roles
+  
+  Create Rolebinding:
+  ************************
+  
+  apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: pod-reader
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+  
+ $ kubectl create -f role-bind.yml
+ $ kubectl get rolebindings
+ 
+kubectl describe rolebindings
+kubectl auth can-i see pods
+kubectl auth can-i get  pods --as jane
+
+
+kubectl run pod1 --image nginx
+
+kubectl get pods --as jane
+
+kubectl run pod2 --image nginx --as jane
+
+Error from server (Forbidden): pods is forbidden: User "jane" cannot create resource "pods" in API group "" in the namespace "default"
+  
