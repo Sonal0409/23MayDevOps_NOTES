@@ -1,0 +1,114 @@
+- hosts: webservers
+  become: true
+  vars:
+   pkg1: git
+   pkg2: docker
+   repo_name: https://github.com/Sonal0409/AnsibleDockerdemo.git
+   dest_path: /tmp/gitrepo
+  tasks:
+  - name: Install {{pkg1}} on the host server
+    yum: name={{pkg1}} state=present
+  - name: Install {{pkg2}} on the host server
+    yum: name={{pkg2}} state=present
+  - name: Start {{pkg2}} engine
+    service: name={{pkg2}} state=started
+  - name: clone the repository on the slave
+    git: repo={{repo_name}} dest={{dest_path}}
+  - name: Build the dockerfile in to an Image
+    command: chdir={{dest_path}} docker build -t myimage .
+  - name: run the image
+    command: docker run -itd -P myimage
+
+
+*****************************
+
+- hosts: webservers
+  become: true
+  tasks:
+  - name: Install multiple package on the host server
+    yum: name={{item}} state=present
+    loop:
+    - git
+    - docker
+    - tree
+    - maven
+  - name: Create multiple files on the hostservers
+    file: path=/tmp/{{item}} state=touch
+    loop:
+    - newfile1
+    - newfile2
+    - newfile3
+****************************************
+
+Step 1:
+
+create a role:
+
+ $ ansible-galaxy init tomcat
+ $ cd tomcat
+ $ ls
+
+directorys
+
+defaults  files  handlers  meta  README.md  tasks  templates  tests  vars
+
+$ sudo vim tasks/main.yml
+
+  - name: install {{pkg1}}
+    yum: name={{pkg1}} state=present
+  - name: start tomcat
+    service: name={{pkg1}} state=started
+  - name: deploy war file   
+    get_url:
+     url={{path}}
+     dest={{dest_path}}
+    notify: restart tomcat
+
+$ sudo vim handlers/main.yml
+
+   - name: restart {{pkg1}}
+     service: name={{pkg1}} state=restarted
+
+$ sudo vim vars/main.yml
+
+pkg1: tomcat
+path: https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war
+dest_path: /usr/share/tomcat/webapps
+
+$ cd ../..
+
+$ cd /etc/ansible
+
+$ sudo vim playbook3.yml
+
+- hosts: webservers
+  become: true
+  roles:
+   - tomcat
+
+
+
+---
+- hosts: webservers
+  become: true
+  become_user: root
+  tasks:
+  - name: install {{pkg1}}
+    yum: name={{pkg1}} state=present
+  - name: start tomcat
+    service: name={{pkg1}} state=started
+  - name: deploy war file   
+    get_url:
+     url={{path}}
+     dest={{dest_path}}
+    notify: restart tomcat
+  handlers:
+   - name: restart {{pkg1}}
+     service: name={{pkg1}} state=restarted
+
+
+Variable:
+
+pkg1: tomcat
+path: https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war
+dest_path: /usr/share/tomcat/webapps
